@@ -61,65 +61,75 @@ class _QuizPageState extends State<QuizPage> {
         final correctAnswer = _quizData[_currentQuestionIndex]['correctAnswer'];
         final additionalInfo = _quizData[_currentQuestionIndex]['additionalInfo'];
 
-        return SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Text(
-                  'Question:',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  _quizData[_currentQuestionIndex]['question'],
-                  style: const TextStyle(fontSize: 16),
-                ),
-                const SizedBox(height: 20),
-                const Text(
-                  'Options:',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 10),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: _quizData[_currentQuestionIndex]['options']
-                      .map<Widget>(
-                        (option) => Text(
-                      option == correctAnswer
-                          ? '* $option (Correct Answer)'
-                          : '- $option',
+        return DraggableScrollableSheet(
+          expand: false,
+          initialChildSize: 0.5, // You can adjust this value as needed
+          minChildSize: 0.3,
+          maxChildSize: 0.9,
+          builder: (BuildContext context, ScrollController scrollController) {
+            return SingleChildScrollView(
+              controller: scrollController,
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Text(
+                      'Question:',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      _quizData[_currentQuestionIndex]['question'],
                       style: const TextStyle(fontSize: 16),
                     ),
-                  )
-                      .toList(),
+                    const SizedBox(height: 20),
+                    const Text(
+                      'Options:',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: _quizData[_currentQuestionIndex]['options']
+                          .map<Widget>(
+                            (option) => Text(
+                          option == correctAnswer
+                              ? '* $option (Correct Answer)'
+                              : '- $option',
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      )
+                          .toList(),
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      selectedOption == correctAnswer
+                          ? 'Correct!'
+                          : 'Incorrect!',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: selectedOption == correctAnswer
+                            ? Colors.green
+                            : Colors.red,
+                      ),
+                    ),
+                    if (selectedOption == correctAnswer && additionalInfo != null)
+                      const SizedBox(height: 20),
+                    Text(
+                      additionalInfo,
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 20),
-                Text(
-                  selectedOption == correctAnswer
-                      ? 'Correct!'
-                      : 'Incorrect!',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: selectedOption == correctAnswer
-                        ? Colors.green
-                        : Colors.red,
-                  ),
-                ),
-                if (selectedOption == correctAnswer && additionalInfo != null)
-                  const SizedBox(height: 20),
-                Text(
-                  additionalInfo,
-                  style: const TextStyle(fontSize: 16),
-                ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         );
       },
     );
   }
+
 
 
 
