@@ -144,15 +144,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 Tab(text: "Badges"),
               ],
             ),
-            const Expanded(
+             Expanded(
               child: TabBarView(
                 children: [
-                  // Content for the "Score" tab
-                  Center(
-                    child: Text("Score Tab Content"),
-                  ),
-                  // Content for the "Badges" tab
-                  Center(
+                  ScoreTabContent(),
+                  const Center(
                     child: Text("Badges Tab Content"),
                   ),
                 ],
@@ -164,3 +160,64 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
+class ScoreTabContent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildScoreCard("Total de Quiz joués", "1234"),
+                const SizedBox(width: 20),
+                _buildScoreCard("Série de victoires", "42"),
+              ],
+            ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildScoreCard("Accomplissements", "3"),
+                const SizedBox(width: 20),
+                _buildScoreCard("Rang", "Gold"),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildScoreCard(String title, String value) {
+    return Container(
+      width: 160, // Adjusted width
+      child: Card(
+        elevation: 3,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20), // Adjusted padding
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                value,
+                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+

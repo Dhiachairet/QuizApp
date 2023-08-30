@@ -10,27 +10,78 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool _isSearchOpen = false;
+  List<String> quizTendanceImageUrls = [
+    'https://th.bing.com/th/id/R.0e94ad1972d8c83f9cde2128a1257dd1?rik=rWBkXOY099kopg&pid=ImgRaw&r=0',
+    'https://th.bing.com/th/id/R.b8efcbdb9db0e01acb3bb93b3d570ec8?rik=FqY6zwwmqhfFkg&pid=ImgRaw&r=0',
+    'https://th.bing.com/th/id/OIP.SgsXNrzRmp9rimjYNbk7jQHaJK?pid=ImgDet&rs=1',
+    'https://cdn.shopify.com/s/files/1/0590/5858/5777/products/CreationofParadisePitreMaster25pc2021_400x.jpg?v=1641066803',
+    'https://i1.sndcdn.com/artworks-lF5j1ZSj0RJxSOmF-WEzSpg-t500x500.jpg',
 
-  Widget _buildListItem(String title) {
+  ];
+  List<String> NouveautesImageUrls = [
+    'https://th.bing.com/th/id/R.0e94ad1972d8c83f9cde2128a1257dd1?rik=rWBkXOY099kopg&pid=ImgRaw&r=0',
+    'https://th.bing.com/th/id/R.b8efcbdb9db0e01acb3bb93b3d570ec8?rik=FqY6zwwmqhfFkg&pid=ImgRaw&r=0',
+    'https://th.bing.com/th/id/OIP.SgsXNrzRmp9rimjYNbk7jQHaJK?pid=ImgDet&rs=1',
+    'https://cdn.shopify.com/s/files/1/0590/5858/5777/products/CreationofParadisePitreMaster25pc2021_400x.jpg?v=1641066803',
+    'https://i1.sndcdn.com/artworks-lF5j1ZSj0RJxSOmF-WEzSpg-t500x500.jpg',
+  ];
+  List<String> topPicksImageUrls = [
+    'https://th.bing.com/th/id/R.0e94ad1972d8c83f9cde2128a1257dd1?rik=rWBkXOY099kopg&pid=ImgRaw&r=0',
+    'https://th.bing.com/th/id/R.b8efcbdb9db0e01acb3bb93b3d570ec8?rik=FqY6zwwmqhfFkg&pid=ImgRaw&r=0',
+    'https://th.bing.com/th/id/OIP.SgsXNrzRmp9rimjYNbk7jQHaJK?pid=ImgDet&rs=1',
+    'https://cdn.shopify.com/s/files/1/0590/5858/5777/products/CreationofParadisePitreMaster25pc2021_400x.jpg?v=1641066803',
+    'https://i1.sndcdn.com/artworks-lF5j1ZSj0RJxSOmF-WEzSpg-t500x500.jpg',
+  ];
+
+  Widget _buildListItem(String title, String imageUrl) {
     return Container(
       width: 150,
+      height: 200,
       margin: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
         color: Colors.blueGrey,
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Center(
-        child: Text(
-          title,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+        borderRadius: BorderRadius.circular(15), // Apply circular border radius to the container
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 5,
+            offset: Offset(0, 3),
           ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15), // Apply circular border radius to the image and overlay
+        child: Stack(
+          children: [
+            Image.network(
+              imageUrl,
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: double.infinity,
+            ),
+            Positioned.fill(
+              child: Container(
+                color: Colors.black.withOpacity(0.3),
+                child: Center(
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
+
+
+
 
   void _openSearch() {
     setState(() {
@@ -108,12 +159,13 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 200,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: 10,
+                itemCount: quizTendanceImageUrls.length,
                 itemBuilder: (context, index) {
-                  return _buildListItem('Quiz $index');
+                  return _buildListItem('Quiz $index', quizTendanceImageUrls[index]);
                 },
               ),
             ),
+
             const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
@@ -128,9 +180,9 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 200,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: 10,
+                itemCount: NouveautesImageUrls.length,
                 itemBuilder: (context, index) {
-                  return _buildListItem('Nouveau $index');
+                  return _buildListItem('Quiz $index', NouveautesImageUrls[index]);
                 },
               ),
             ),
@@ -148,9 +200,9 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 200,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: 10,
+                itemCount: topPicksImageUrls.length,
                 itemBuilder: (context, index) {
-                  return _buildListItem('Top Pick $index');
+                  return _buildListItem('Quiz $index', topPicksImageUrls[index]);
                 },
               ),
             ),
